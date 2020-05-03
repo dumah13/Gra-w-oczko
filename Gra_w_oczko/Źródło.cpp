@@ -2,11 +2,11 @@
 #include <time.h>
 #include <iostream>
 #include "DodatkoweFunkcje.h"
-#include <vld.h>
+//#include <vld.h>
 
 using namespace std;
 int main() {
-	srand(time(0));
+	srand((unsigned int)time(0));
 	bool kontynuuj = true;
 
 	int liczbaGraczy;

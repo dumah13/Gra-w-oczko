@@ -13,7 +13,7 @@ Gracz::Gracz(Kasyno* _ksKasyno, string _nazwa):
 	bPas(false),
 	kKartyGracza {}
 {
-	for (int i = 0; i < _nazwa.length(); i++)
+	for (int i = 0; i < (int)_nazwa.length(); i++)
 	{
 		if (i == 19) {
 			nazwaGracza[19] = '\0';
