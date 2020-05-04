@@ -2,7 +2,7 @@
 #include <time.h>
 #include <iostream>
 #include "DodatkoweFunkcje.h"
-#include <vld.h>
+//#include <vld.h>
 
 using namespace std;
 int main() {
