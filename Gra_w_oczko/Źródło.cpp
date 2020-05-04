@@ -2,10 +2,12 @@
 #include <time.h>
 #include <iostream>
 #include "DodatkoweFunkcje.h"
-//#include <vld.h>
+#include <vld.h>
 
 using namespace std;
 int main() {
+
+	//Inicjalizacja programu
 	srand((unsigned int)time(0));
 	bool kontynuuj = true;
 
@@ -13,6 +15,22 @@ int main() {
 	int liczbaBotow;
 	
 	Kasyno kasyno1(false);
+
+	//Brute force testy operatora przypisania, konstruktora kopiujacego i destruktora
+	/*Kasyno kasyno2(false);
+
+	kasyno1.rozpocznijRozgrywke();
+	int i = 0;
+
+	while (i++ < 100000) {
+		
+		Kasyno kasyno3(kasyno1);
+		kasyno1 = kasyno2;
+		kasyno2 = kasyno3;
+	}
+	*/
+
+	//Petla programu
 	do
 	{
 		if (kontynuuj)
@@ -28,6 +46,9 @@ int main() {
 			system("cls");
 
 			kasyno1.nowaGra(nazwij, liczbaGraczy, liczbaBotow);
+
+			//Testy przypisania
+			//kasyno2 = kasyno1;
 		}
 
 		while (kasyno1.wykonajTure());

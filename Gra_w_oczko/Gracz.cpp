@@ -55,7 +55,7 @@ int Gracz::wykonajAkcje() {
 	int wybor;
 	Karta* pobranaKarta;
 
-	if (iIloscPunktow < 21 && iIloscKart < MaxLiczbaKart)
+	if (iIloscPunktow < Kasyno::MaxLiczbaPunktowDoWygrania && iIloscKart < MaxLiczbaKart)
 	{
 		cout << "Wpisz 1 aby wziac karte.\nWpisz 2 aby spasowac.\nWpisz 3 aby zakonczyc gre.\n";
 		wybor = wczytajWartosc<int>(cin, 1, 3);

@@ -17,4 +17,5 @@ public:
 };
 
 using namespace std;
+//ETAP 2 - PRZECI¥¯ONY OPERATOR << DO WYPISYWANIA KARTY BEZPOŒREDNIO DO STRUMIENIA
 ostream& operator<<(ostream& _os, const Karta& _Karta);

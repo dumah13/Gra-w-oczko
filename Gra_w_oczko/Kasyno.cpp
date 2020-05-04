@@ -10,7 +10,6 @@ Kasyno::Kasyno(bool _bNazwijGraczy, int _iLiczbaGraczyLudzkich, int _iLiczbaBoto
 	iNrBota(1),
 	iNrGracza(1)
 {
-	
 	sprawdzLiczbeGraczy(_iLiczbaBotow, _iLiczbaGraczyLudzkich);
 
 	inicjalizujGraczy(_bNazwijGraczy);
@@ -22,6 +21,37 @@ Kasyno::Kasyno(bool _bNazwijGraczy, int _iLiczbaGraczyLudzkich, int _iLiczbaBoto
 			kKarty[indeks].setWartosc(j);
 		}
 	}
+}
+
+Kasyno::Kasyno(const Kasyno& _ksKasyno) :
+	gGracze{},
+	iLiczbaBotow(_ksKasyno.iLiczbaBotow),
+	iLiczbaGraczy(_ksKasyno.iLiczbaGraczy),
+	iLiczbaGraczyLudzkich(_ksKasyno.iLiczbaGraczyLudzkich),
+	iNrBota(_ksKasyno.iNrBota),
+	iNrGracza(_ksKasyno.iNrGracza),
+	iWydaneKarty(_ksKasyno.iWydaneKarty)
+{
+
+
+	for (int i = 0; i < Kasyno::LiczbaKart; i++)
+	{
+		kKarty[i] = _ksKasyno.kKarty[i];
+	}
+
+	for (int i = 0; i < _ksKasyno.iLiczbaGraczy; i++)
+	{
+		Gracz* gracz = typeid(*_ksKasyno.gGracze[i]) == typeid(Bot) ? new Bot((*dynamic_cast<Bot*>(_ksKasyno.gGracze[i]))) : new Gracz(*_ksKasyno.gGracze[i]);
+
+		for (int j = 0; j < _ksKasyno.gGracze[i]->GetIloscKart(); j++)
+		{
+			int offset = _ksKasyno.gGracze[i]->GetKarty()[j] - _ksKasyno.kKarty;
+			gracz->GetKarty()[j] = &kKarty[offset];
+		}
+		gGracze[i] = gracz;
+	}
+
+
 }
 
 void Kasyno::tasuj(int _iLiczbaPrzetasowan)
@@ -195,6 +225,21 @@ void Kasyno::nowaGra(bool _bNazwij, int _iLiczbaGraczy, int _iLiczbaBotow) {
 	rozpocznijRozgrywke();
 }
 
+//OPERAToRY
+
+Kasyno& Kasyno::operator=(Kasyno _ksKasyno) {
+	swap(*this, _ksKasyno);
+	return *this;
+}
+
+//Destruktor
+Kasyno::~Kasyno() {
+	for (int i = 0; i < (iLiczbaGraczy); i++)
+	{
+		delete gGracze[i];
+	}
+}
+
 
 //METODY PRYWATNE
 
@@ -225,17 +270,17 @@ bool* Kasyno::sprawdzWygrane() {
 		int punkty = gGracze[i]->GetIloscPunktow();
 
 
-		if (punkty == 21) {
+		if (punkty == MaxLiczbaPunktowDoWygrania) {
 			wygrane[i] = true;
 			for (int j = 0; j < i; j++) {
 
-				if (gGracze[j]->GetIloscPunktow() != 21)
+				if (gGracze[j]->GetIloscPunktow() != MaxLiczbaPunktowDoWygrania)
 				{
 					wygrane[j] = false;
 				}
 			}
 		}
-		else if (punkty < 21) {
+		else if (punkty < MaxLiczbaPunktowDoWygrania) {
 			wygrane[i] = true;
 			for (int j = 0; j < i; j++) {
 				if (wygrane[j]) {
@@ -264,7 +309,7 @@ void Kasyno::inicjalizujGraczy(bool _bNazwij) {
 
 		if (_bNazwij)
 		{
-			cout << "Podaj nazwe gracza." << endl;
+			cout << "Podaj nazwe gracza. (1 s³owo!)" << endl;
 			nazwa = wczytajWartosc<string>(cin);
 		}
 		else {
@@ -303,12 +348,5 @@ void Kasyno::zamienKarty(Karta& _kKarta1, Karta& _kKarta2)
 
 	_kKarta1 = _kKarta2;
 	_kKarta2 = tempKarta;
-}
-
-Kasyno::~Kasyno() {
-	for (int i = 0; i < (iLiczbaGraczy); i++)
-	{
-		delete gGracze[i];
-	}
 }
 
